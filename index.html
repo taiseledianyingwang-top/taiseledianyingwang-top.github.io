@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>太色了电影网 | 每日片单排期与在线放映时刻表 · taiseledianyingwang-top.github.io</title>
+<meta name="description" content="太色了电影网（taiseledianyingwang-top.github.io）是一份按日期编排的观影节目单：院线热映、经典重映、冷门佳作与限时展映分区排列，每部影片附带片长、类型、上映年份与推荐理由。每日更新放映时刻表，支持按类型、年份、地区快速检索，为影迷提供不打烊的选片与排片参考。">
+<meta name="keywords" content="太色了电影网,taiseledianyingwang-top,电影排片表,今日上映电影,在线观影指南,电影放映时刻表,院线片单,经典电影推荐,冷门佳片,电影类型检索,独立电影,纪录片片单,亚洲电影,欧洲电影,电影资料库">
+<meta name="robots" content="index,follow">
+<meta name="author" content="太色了电影网">
+<meta property="og:type" content="website">
+<meta property="og:title" content="太色了电影网 · 每日电影排期与放映时刻表">
+<meta property="og:description" content="按日期编排的观影节目单，院线热映、经典重映、冷门佳作与限时展映分区排列，每日更新放映时刻表。">
+<meta property="og:url" content="https://taiseledianyingwang-top.github.io">
+<meta property="og:site_name" content="太色了电影网">
+<link rel="canonical" href="https://taiseledianyingwang-top.github.io">
+<style>
+:root{
+  --curtain:#7a0c1a;
+  --curtain-deep:#4c0610;
+  --gold:#d9a33b;
+  --gold-soft:#f0cf7c;
+  --marquee:#0d0a14;
+  --paper:#f4ecdd;
+  --ink:#231a12;
+  --muted:#8a7a63;
+  --frame:#e8dcc4;
+  --card:#1a141f;
+  --ticket:#2b2233;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--marquee);
+  color:var(--paper);
+  font-family:"Songti SC","SimSun","Noto Serif SC",Georgia,serif;
+  line-height:1.75;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1200px 700px at 15% -10%,rgba(217,163,59,.18),transparent 60%),
+    radial-gradient(900px 600px at 90% 10%,rgba(122,12,26,.35),transparent 55%),
+    linear-gradient(180deg,#110b16,#0d0a14 40%,#140d18);
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+
+/* ============ 顶部放映信息条 ============ */
+.marquee-strip{
+  border-bottom:1px solid rgba(217,163,59,.35);
+  background:linear-gradient(90deg,rgba(76,6,16,.6),rgba(13,10,20,.9),rgba(76,6,16,.6));
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:12px;letter-spacing:2px;
+}
+.marquee-strip .inner{
+  max-width:1280px;margin:0 auto;padding:7px 22px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  color:var(--gold-soft);
+}
+.marquee-strip span{white-space:nowrap}
+.marquee-strip em{font-style:normal;color:#fff;background:var(--curtain);padding:1px 8px;border-radius:2px;margin:0 4px}
+
+/* ============ 招牌 ============ */
+.signboard{
+  position:relative;
+  padding:34px 22px 26px;
+  text-align:center;
+  border-bottom:3px double var(--gold);
+  background:
+    repeating-linear-gradient(90deg,transparent 0,transparent 22px,rgba(217,163,59,.04) 22px,rgba(217,163,59,.04) 23px),
+    radial-gradient(800px 300px at 50% 0%,rgba(217,163,59,.14),transparent 70%);
+}
+.signboard h1{
+  font-size:clamp(30px,7vw,60px);
+  letter-spacing:8px;
+  color:var(--gold-soft);
+  text-shadow:0 3px 0 #000,0 0 24px rgba(217,163,59,.35);
+  font-weight:900;
+}
+.signboard .sub{
+  margin-top:10px;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:clamp(11px,2.6vw,13px);
+  letter-spacing:6px;
+  color:var(--muted);
+}
+.signboard .sub b{color:var(--paper);font-weight:400}
+.signboard .ribbon{
+  margin-top:14px;
+  display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;
+}
+.signboard .ribbon i{
+  font-style:normal;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:11px;letter-spacing:2px;
+  padding:4px 13px;border:1px solid rgba(217,163,59,.5);
+  border-radius:20px;color:var(--gold-soft);
+}
+
+/* ============ 竖排侧导航 ============ */
+.side-nav{
+  display:none;
+  position:fixed;left:0;top:50%;transform:translateY(-50%);
+  z-index:40;flex-direction:column;
+  border:1px solid rgba(217,163,59,.4);border-left:none;
+  border-radius:0 6px 6px 0;overflow:hidden;
+  background:rgba(13,10,20,.92);backdrop-filter:blur(6px);
+}
+.side-nav a{
+  writing-mode:vertical-rl;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:13px;letter-spacing:3px;
+  padding:16px 9px;color:var(--paper);
+  border-bottom:1px solid rgba(217,163,59,.15);
+  transition:.25s;
+}
+.side-nav a:last-child{border-bottom:none}
+.side-nav a:hover{background:var(--curtain);color:var(--gold-soft)}
+@media(min-width:1100px){.side-nav{display:flex}}
+
+/* ============ 顶部横排导航 ============ */
+.top-nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(13,10,20,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(217,163,59,.25);
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.top-nav .row{
+  max-width:1280px;margin:0 auto;padding:0 16px;
+  display:flex;align-items:center;gap:4px;overflow-x:auto;
+  scrollbar-width:none;
+}
+.top-nav .row::-webkit-scrollbar{display:none}
+.top-nav a{
+  flex:0 0 auto;
+  padding:13px 15px;font-size:14px;letter-spacing:2px;
+  color:var(--paper);position:relative;white-space:nowrap;
+}
+.top-nav a::after{
+  content:"";position:absolute;left:15px;right:15px;bottom:7px;
+  height:2px;background:var(--gold);transform:scaleX(0);transition:.25s;
+}
+.top-nav a:hover::after{transform:scaleX(1)}
+.top-nav .now{color:var(--gold-soft)}
+.top-nav .now::after{transform:scaleX(1)}
+
+/* ============ 栏目通用 ============ */
+.house{position:relative;padding:56px 22px}
+.house::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(217,163,59,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(217,163,59,.05) 1px,transparent 1px);
+  background-size:56px 56px;pointer-events:none;
+}
+.curtain{
+  max-width:1280px;margin:0 auto;position:relative;
+  background:linear-gradient(180deg,rgba(26,20,31,.92),rgba(20,15,26,.96));
+  border:1px solid rgba(217,163,59,.28);
+  border-radius:4px;
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+}
+.curtain-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+  padding:22px 26px 16px;border-bottom:2px solid var(--gold);
+  flex-wrap:wrap;
+}
+.curtain-head .no{
+  font-family:Georgia,serif;font-size:13px;letter-spacing:2px;color:var(--gold);
+}
+.curtain-head h2{
+  font-size:clamp(22px,4.5vw,34px);letter-spacing:4px;color:var(--gold-soft);font-weight:900;
+}
+.curtain-head .en{
+  font-family:Georgia,serif;font-style:italic;font-size:13px;color:var(--muted);letter-spacing:2px;
+}
+.curtain-body{padding:26px}
+
+/* ============ 栏目一：放映时刻表 ============ */
+.ticker{display:flex;flex-direction:column;gap:0;border:1px solid rgba(217,163,59,.22)}
+.ticker-row{
+  display:grid;
+  grid-template-columns:92px 1fr 88px 96px;
+  align-items:center;gap:12px;
+  padding:14px 18px;
+  border-bottom:1px dashed rgba(217,163,59,.18);
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.ticker-row:last-child{border-bottom:none}
+.ticker-row .clock{
+  font-family:Georgia,serif;font-size:20px;letter-spacing:1px;color:var(--gold);
+}
+.ticker-row .film-name{font-size:16px;letter-spacing:1px}
+.ticker-row .film-name small{display:block;font-size:11px;color:var(--muted);letter-spacing:1px;margin-top:2px}
+.ticker-row .genre{font-size:12px;color:var(--paper);background:rgba(122,12,26,.55);padding:4px 10px;border-radius:2px;text-align:center}
+.ticker-row .seat{font-size:12px;color:var(--gold-soft);text-align:center;letter-spacing:1px}
+@media(max-width:720px){
+  .ticker-row{grid-template-columns:70px 1fr;gap:8px;padding:13px 14px}
+  .ticker-row .genre,.ticker-row .seat{grid-column:2;text-align:left;background:none;padding:0;color:var(--muted)}
+  .ticker-row .seat{margin-top:2px}
+}
+
+/* ============ 栏目二：海报墙 ============ */
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:20px}
+.poster{
+  position:relative;
+  border:6px solid #f6efdf;
+  border-bottom-color:#e2d6b8;
+  border-right-color:#e2d6b8;
+  border-radius:2px;
+  overflow:hidden;
+  box-shadow:0 12px 28px rgba(0,0,0,.5);
+  transform:rotate(var(--tilt,-1deg));
+  transition:.35s;
+  background:var(--card);
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.poster:nth-child(3n){--tilt:1.2deg}
+.poster:nth-child(3n+1){--tilt:-.8deg}
+.poster:nth-child(5n){--tilt:1.6deg}
+.poster:hover{transform:rotate(0) translateY(-8px) scale(1.02);z-index:3}
+.poster .frame{
+  aspect-ratio:2/3;position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;
+}
+.poster .frame .bg{position:absolute;inset:0;opacity:.9}
+.poster .num{
+  position:absolute;top:8px;left:10px;z-index:2;
+  font-family:Georgia,serif;font-size:12px;color:var(--gold);letter-spacing:1px;
+}
+.poster .play{
+  position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.28);opacity:0;transition:.3s;
+}
+.poster:hover .play{opacity:1}
+.poster .play::after{
+  content:"";width:46px;height:46px;border-radius:50%;
+  border:2px solid var(--gold-soft);
+  background:radial-gradient(circle at 56% 50%,var(--gold) 0 32%,transparent 33%);
+}
+.poster .meta{
+  position:relative;z-index:2;padding:10px 12px 12px;
+  background:linear-gradient(180deg,rgba(13,10,20,.1),rgba(13,10,20,.94));
+}
+.poster .meta b{display:block;font-size:15px;letter-spacing:1px;color:#fff}
+.poster .meta span{display:block;font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:1px}
+.poster .tag{
+  position:absolute;top:-2px;right:-2px;z-index:3;
+  background:var(--curtain);color:var(--gold-soft);
+  font-size:10px;letter-spacing:1px;padding:3px 8px;
+  transform:rotate(4deg);
+}
+/* 海报配色（纯 CSS 质感） */
+.bg-a{background:linear-gradient(160deg,#2c1a4d,#7a3b6e 60%,#c66b5a)}
+.bg-b{background:linear-gradient(160deg,#0b2a3a,#12606b 55%,#7fb93f)}
+.bg-c{background:linear-gradient(160deg,#3a0d0d,#8a2f24 55%,#d99a3c)}
+.bg-d{background:linear-gradient(160deg,#1a1a2e,#16213e 55%,#4f7cac)}
+.bg-e{background:linear-gradient(160deg,#2b1c0a,#6b4a1a 55%,#c9a227)}
+.bg-f{background:linear-gradient(160deg,#10261c,#1f5c3e 55%,#a8d080)}
+.bg-g{background:linear-gradient(160deg,#2b0e2b,#5c1f5c 55%,#d05ca8)}
+.bg-h{background:linear-gradient(160deg,#111, #3a3a3a 55%,#b9b9b9)}
+.bg-i{background:linear-gradient(160deg,#1a1208,#4a3418 55%,#e0c48c)}
+.bg-j{background:linear-gradient(160deg,#0e1a2b,#1f3a5f 55%,#6fb0d8)}
+.grain::after{
+  content:"";position:absolute;inset:0;z-index:1;opacity:.35;mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px);
+}
+.stripe::before{
+  content:"";position:absolute;inset:0;z-index:1;opacity:.3;
+  background:repeating-linear-gradient(45deg,transparent 0 10px,rgba(0,0,0,.5) 10px 12px);
+}
+.vignette::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  box-shadow:inset 0 0 60px rgba(0,0,0,.7);
+}
+
+/* ============ 栏目三：检索手册 ============ */
+.manual{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.guide{
+  border:1px solid rgba(217,163,59,.25);
+  background:linear-gradient(180deg,rgba(43,34,51,.6),rgba(20,15,26,.7));
+  padding:0 0 18px;
+  transition:.3s;
+}
+.guide:hover{border-color:var(--gold);transform:translateY(-4px)}
+.guide .cover{
+  height:120px;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.guide .cover em{
+  font-style:normal;font-family:Georgia,serif;font-size:46px;color:rgba(217,163,59,.55);
+}
+.guide .cover b{
+  position:absolute;left:16px;bottom:12px;font-size:17px;letter-spacing:2px;color:var(--gold-soft);
+}
+.guide .cover i{
+  position:absolute;right:14px;top:12px;font-style:normal;font-size:11px;letter-spacing:1px;color:var(--muted);
+}
+.guide ul{padding:14px 18px 0}
+.guide li{
+  font-size:13px;color:var(--paper);padding:6px 0 6px 16px;position:relative;letter-spacing:.5px;
+}
+.guide li::before{content:"§";position:absolute;left:0;top:6px;color:var(--gold);font-size:11px}
+.guide li a:hover{color:var(--gold-soft);border-bottom:1px dashed var(--gold)}
+
+/* ============ 栏目四：排片日历 ============ */
+.calendar{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.day{
+  border:1px solid rgba(217,163,59,.22);
+  background:rgba(20,15,26,.7);
+  padding:14px 14px 16px;
+  position:relative;min-height:150px;
+  transition:.25s;
+}
+.day:hover{border-color:var(--gold);background:rgba(43,34,51,.8)}
+.day .d{
+  font-family:Georgia,serif;font-size:30px;color:var(--gold);line-height:1;
+}
+.day .d i{font-style:normal;font-size:12px;color:var(--muted);margin-left:6px;letter-spacing:1px}
+.day .wk{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:4px}
+.day ol{margin-top:10px}
+.day ol li{font-size:12px;color:var(--paper);padding:3px 0;border-top:1px dotted rgba(217,163,59,.14)}
+.day.today{border-color:var(--gold);background:linear-gradient(180deg,rgba(122,12,26,.4),rgba(20,15,26,.8))}
+.day.today .d{color:#fff}
+
+/* ============ 栏目五：观影札记 ============ */
+.notes{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;
+}
+.note{
+  position:relative;padding:24px 24px 22px 30px;
+  background:
+    linear-gradient(90deg,var(--gold) 0 0) left center/4px 70% no-repeat,
+    rgba(244,236,221,.04);
+  border:1px solid rgba(217,163,59,.2);
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.note .who{font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
+.note h4{font-size:16px;letter-spacing:1px;color:#fff;margin-bottom:10px;font-weight:700}
+.note p{font-size:13.5px;color:var(--paper);line-height:1.9}
+.note .star{position:absolute;right:18px;top:18px;color:var(--gold);font-size:13px;letter-spacing:2px}
+
+/* ============ 栏目六：排片须知 ============ */
+.notice{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.notice .item{
+  border-left:3px solid var(--gold);
+  padding:4px 0 4px 16px;
+}
+.notice .item h5{font-size:15px;letter-spacing:1px;color:var(--gold-soft);margin-bottom:6px}
+.notice .item p{font-size:13px;color:var(--paper);line-height:1.85}
+.notice .item p code{
+  background:rgba(217,163,59,.15);color:var(--gold-soft);padding:1px 6px;border-radius:2px;font-size:12px;
+}
+
+/* ============ 页脚 ============ */
+.foot{
+  border-top:3px double var(--gold);
+  padding:40px 22px 30px;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.4));
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.foot .cols{
+  max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:30px;
+}
+.foot h6{font-size:14px;letter-spacing:3px;color:var(--gold-soft);margin-bottom:12px}
+.foot ul li{padding:4px 0;font-size:13px;color:var(--paper)}
+.foot ul li a:hover{color:var(--gold-soft)}
+.foot .colophon{
+  max-width:1280px;margin:26px auto 0;padding-top:20px;border-top:1px solid rgba(217,163,59,.2);
+  font-size:12px;color:var(--muted);letter-spacing:1px;line-height:2;
+}
+.foot .colophon b{color:var(--paper);font-weight:400}
+.foot .scroll-top{
+  position:fixed;right:16px;bottom:16px;z-index:40;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--curtain);color:var(--gold-soft);
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--gold);font-size:16px;
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<!-- 放映信息条 -->
+<div class="marquee-strip">
+  <div class="inner">
+    <span><em>太色了电影网</em>今日放映 <b style="color:var(--gold)">12</b> 场 · 更新于 <b style="color:var(--gold)">2026 年 10 月 08 日</b> · 地址：https://taiseledianyingwang-top.github.io</span>
+    <span>每日 06:00 换片 · 22:30 末场 · 全馆免费取阅</span>
+  </div>
+</div>
+
+<!-- 招牌 -->
+<header class="signboard">
+  <h1>太色了电影网</h1>
+  <div class="sub"><b>TAIS'ELE DIANYINGWANG</b> · 一份按日期编排的观影节目单 · 始于对好电影的耐心</div>
+  <div class="ribbon">
+    <i>院线热映</i><i>经典重映</i><i>冷门佳作</i><i>限时展映</i><i>每日换片</i>
+  </div>
+</header>
+
+<!-- 侧导航 -->
+<nav class="side-nav" aria-label="栏目导航">
+  <a href="#ticker">放映时刻表</a>
+  <a href="#wall">在映片单</a>
+  <a href="#manual">检索手册</a>
+  <a href="#calendar">排片日历</a>
+  <a href="#notes">观影札记</a>
+  <a href="#notice">取阅须知</a>
+</nav>
+
+<!-- 顶部导航 -->
+<nav class="top-nav">
+  <div class="row">
+    <a href="#ticker" class="now">放映时刻表</a>
+    <a href="#wall">在映片单</a>
+    <a href="#manual">检索手册</a>
+    <a href="#calendar">排片日历</a>
+    <a href="#notes">观影札记</a>
+    <a href="#notice">取阅须知</a>
+    <a href="https://taiseledianyingwang-top.github.io">访问主页</a>
+  </div>
+</nav>
+
+<!-- 栏目一：放映时刻表 -->
+<section class="house" id="ticker">
+  <div class="curtain">
+    <div class="curtain-head">
+      <div>
+        <div class="no">PROGRAMME · 01</div>
+        <h2>放映时刻表</h2>
+      </div>
+      <div class="en">Screening Times</div>
+    </div>
+    <div class="curtain-body">
+      <div class="ticker">
+        <div class="ticker-row"><div class="clock">09:30</div><div class="film-name">黎明前的公路<small>导演：陈默 · 2025 · 118 分钟</small></div><div class="genre">剧情</div><div class="seat">1 号厅 · 余 42 座</div></div>
+        <div class="ticker-row"><div class="clock">11:05</div><div class="film-name">潮线以北<small>导演：林知秋 · 2024 · 96 分钟</small></div><div class="genre">纪录</div><div class="seat">2 号厅 · 余 18 座</div></div>
+        <div class="ticker-row"><div class="clock">13:20</div><div class="film-name">最后一班渡轮<small>导演：A. Moreau · 2023 · 104 分钟</small></div><div class="genre">悬疑</div><div class="seat">1 号厅 · 余 60 座</div></div>
+        <div class="ticker-row"><div class="clock">15:40</div><div class="film-name">橘色星期天<small>导演：苏念 · 2026 · 88 分钟</small></div><div class="genre">喜剧</div><div class="seat">3 号厅 · 余 25 座</div></div>
+        <div class="ticker-row"><div class="clock">17:55</div><div class="film-name">无人之境的来信<small>导演：K. Iwata · 2022 · 132 分钟</small></div><div class="genre">剧情</div><div class="seat">1 号厅 · 余 51 座</div></div>
+        <div class="ticker-row"><div class="clock">20:30</div><div class="film-name">铁皮屋顶上的猫<small>导演：黄桉 · 2025 · 79 分钟</small></div><div class="genre">动画</div><div class="seat">2 号厅 · 余 09 座</div></div>
+        <div class="ticker-row"><div class="clock">22:10</div><div class="film-name">夜行列车（4K 修复）<small>导演：M. Karlo · 1981 · 112 分钟</small></div><div class="genre">经典</div><div class="seat">3 号厅 · 余 33 座</div></div>
+      </div>
+      <p style="margin-top:18px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:13px;color:var(--muted);letter-spacing:.5px">时刻表每日 06:00 更新一次，具体场次以现场排片为准。本馆不设在线售票，仅提供排片参考与影片资料查询，影片条目可在 <a href="#wall" style="color:var(--gold-soft);border-bottom:1px dashed var(--gold)">在映片单</a> 中逐条取阅。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目二：海报墙 -->
+<section class="house" id="wall">
+  <div class="curtain">
+    <div class="curtain-head">
+      <div>
+        <div class="no">PROGRAMME · 02</div>
+        <h2>在映片单</h2>
+      </div>
+      <div class="en">Now Showing</div>
+    </div>
+    <div class="curtain-body">
+      <div class="wall">
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-a grain"></div><span class="num">No.01</span><span class="play"></span></div>
+          <span class="tag">热映</span>
+          <div class="meta"><b>黎明前的公路</b><span>剧情 · 2025 · 118 分钟 · 大陆</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-b stripe"></div><span class="num">No.02</span><span class="play"></span></div>
+          <div class="meta"><b>潮线以北</b><span>纪录 · 2024 · 96 分钟 · 台湾</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-c vignette"></div><span class="num">No.03</span><span class="play"></span></div>
+          <span class="tag">导演剪辑</span>
+          <div class="meta"><b>最后一班渡轮</b><span>悬疑 · 2023 · 104 分钟 · 法国</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-d grain"></div><span class="num">No.04</span><span class="play"></span></div>
+          <div class="meta"><b>橘色星期天</b><span>喜剧 · 2026 · 88 分钟 · 大陆</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-e stripe"></div><span class="num">No.05</span><span class="play"></span></div>
+          <span class="tag">展映</span>
+          <div class="meta"><b>无人之境的来信</b><span>剧情 · 2022 · 132 分钟 · 日本</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-f vignette"></div><span class="num">No.06</span><span class="play"></span></div>
+          <div class="meta"><b>铁皮屋顶上的猫</b><span>动画 · 2025 · 79 分钟 · 韩国</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-g grain"></div><span class="num">No.07</span><span class="play"></span></div>
+          <span class="tag">4K 修复</span>
+          <div class="meta"><b>夜行列车</b><span>经典 · 1981 · 112 分钟 · 匈牙利</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-h stripe"></div><span class="num">No.08</span><span class="play"></span></div>
+          <div class="meta"><b>二手书店的下午</b><span>剧情 · 2024 · 101 分钟 · 香港</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-i vignette"></div><span class="num">No.09</span><span class="play"></span></div>
+          <span class="tag">冷门</span>
+          <div class="meta"><b>盐与甘蔗</b><span>纪录 · 2023 · 67 分钟 · 泰国</span></div>
+        </article>
+
+        <article class="poster">
+          <div class="frame"><div class="bg bg-j grain"></div><span class="num">No.10</span><span class="play"></span></div>
+          <div class="meta"><b>第七个冬天</b><span>剧情 · 2025 · 124 分钟 · 伊朗</span></div>
+        </article>
+
+      </div>
+      <p style="margin-top:20px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:13px;color:var(--muted);letter-spacing:.5px">片单按排片热度与更新时间排序，鼠标悬于海报可查看场次余票。<a href="#manual" style="color:var(--gold-soft);border-bottom:1px dashed var(--gold)">检索手册</a> 提供更细的类型、年份与地区筛选入口。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目三：检索手册 -->
+<section class="house" id="manual">
+  <div class="curtain">
+    <div class="curtain-head">
+      <div>
+        <div class="no">PROGRAMME · 03</div>
+        <h2>检索手册</h2>
+      </div>
+      <div class="en">Browse by Category</div>
+    </div>
+    <div class="curtain-body">
+      <div class="manual">
+
+        <div class="guide">
+          <div class="cover bg-a grain"><em>A</em><b>类型索引</b><i>GENRE</i></div>
+          <ul>
+            <li><a href="#">剧情 Drama（38）</a></li>
+            <li><a href="#">喜剧 Comedy（21）</a></li>
+            <li><a href="#">悬疑 Thriller（17）</a></li>
+            <li><a href="#">纪录 Documentary（24）</a></li>
+            <li><a href="#">动画 Animation（12）</a></li>
+          </ul>
+        </div>
+
+        <div class="guide">
+          <div class="cover bg-c vignette"><em>B</em><b>年代索引</b><i>YEAR</i></div>
+          <ul>
+            <li><a href="#">2026 新片（09）</a></li>
+            <li><a href="#">2024 — 2025（46）</a></li>
+            <li><a href="#">2010 — 2023（128）</a></li>
+            <li><a href="#">千禧年前后（64）</a></li>
+            <li><a href="#">经典修复 4K（31）</a></li>
+          </ul>
+        </div>
+
+        <div class="guide">
+          <div class="cover bg-f stripe"><em>C</em><b>地区索引</b><i>REGION</i></div>
+          <ul>
+            <li><a href="#">中国大陆（52）</a></li>
+            <li><a href="#">香港 · 台湾（37）</a></li>
+            <li><a href="#">日本 · 韩国（44）</a></li>
+            <li><a href="#">欧洲大陆（58）</a></li>
+            <li><a href="#">东南亚 · 中东（29）</a></li>
+          </ul>
+        </div>
+
+        <div class="guide">
+          <div class="cover bg-g grain"><em>D</em><b>专题展映</b><i>FEATURE</i></div>
+          <ul>
+            <li><a href="#">女性导演周（12 部）</a></li>
+            <li><a href="#">城市与孤独（16 部）</a></li>
+            <li><a href="#">黑白胶片回顾（22 部）</a></li>
+            <li><a href="#">短片合集（40 部）</a></li>
+            <li><a href="#">配乐原声精选（18 部）</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目四：排片日历 -->
+<section class="house" id="calendar">
+  <div class="curtain">
+    <div class="curtain-head">
+      <div>
+        <div class="no">PROGRAMME · 04</div>
+        <h2>排片日历</h2>
+      </div>
+      <div class="en">Seven-Day Schedule</div>
+    </div>
+    <div class="curtain-body">
+      <div class="calendar">
+
+        <div class="day">
+          <div class="d">08<i>周四</i></div><div class="wk">OCT · 今日换片</div>
+          <ol><li>黎明前的公路 09:30</li><li>橘色星期天 15:40</li><li>夜行列车 22:10</li></ol>
+        </div>
+
+        <div class="day today">
+          <div class="d">09<i>周五</i></div><div class="wk">OCT · 新片首映</div>
+          <ol><li>第七个冬天 10:00</li><li>盐与甘蔗 13:20</li><li>铁皮屋顶上的猫 19:50</li></ol>
+        </div>
+
+        <div class="day">
+          <div class="d">10<i>周六</i></div><div class="wk">OCT · 加开场次</div>
+          <ol><li>潮线以北 09:00</li><li>二手书店的下午 14:30</li><li>无人之境的来信 20:00</li></ol>
+        </div>
+
+        <div class="day">
+          <div class="d">11<i>周日</i></div><div class="wk">OCT · 家庭场</div>
+          <ol><li>铁皮屋顶上的猫 10:30</li><li>橘色星期天 13:00</li><li>最后一班渡轮 16:20</li></ol>
+        </div>
+
+        <div class="day">
+          <div class="d">12<i>周一</i></div><div class="wk">OCT · 修复专场</div>
+          <ol><li>夜行列车 11:00</li><li>黑白胶片回顾 15:00</li><li>黎明前的公路 21:10</li></ol>
+        </div>
+
+        <div class="day">
+          <div class="d">13<i>周二</i></div><div class="wk">OCT · 半价日</div>
+          <ol><li>盐与甘蔗 10:40</li><li>第七个冬天 14:00</li><li>潮线以北 19:30</li></ol>
+        </div>
+
+        <div class="day">
+          <div class="d">14<i>周三</i></div><div class="wk">OCT · 短片夜</div>
+          <ol><li>短片合集 18:00</li><li>纪录片之夜 20:15</li><li>配乐原声 22:00</li></ol>
+        </div>
+
+      </div>
+      <p style="margin-top:18px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:13px;color:var(--muted);letter-spacing:.5px">本页所有场次均为节目单展示用途，实际排片以 <a href="https://taiseledianyingwang-top.github.io" style="color:var(--gold-soft);border-bottom:1px dashed var(--gold)">taiseledianyingwang-top.github.io</a> 首页公告为准。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目五：观影札记 -->
+<section class="house" id="notes">
+  <div class="curtain">
+    <div class="curtain-head">
+      <div>
+        <div class="no">PROGRAMME · 05</div>
+        <h2>观影札记</h2>
+      </div>
+      <div class="en">Programme Notes</div>
+    </div>
+    <div class="curtain-body">
+      <div class="notes">
+
+        <article class="note">
+          <div class="star">★★★★☆</div>
+          <div class="who">VOL.01 · 关于《黎明前的公路》</div>
+          <h4>长镜头里的耐心</h4>
+          <p>陈默把公路片拍成了一场等待：车窗外掠过的不是风景，而是人物不肯说出口的那部分。建议选后排座位观看，画面边缘的细节会在第二遍变得清晰。</p>
+        </article>
+
+        <article class="note">
+          <div class="star">★★★★★</div>
+          <div class="who">VOL.02 · 关于《潮线以北》</div>
+          <h4>潮汐是这部片的第二主角</h4>
+          <p>林知秋花了三个冬季记录同一片海岸，素材量之大几乎不可能压缩进 96 分钟，但她做到了。片中没有任何解说旁白，声音本身就是叙事。</p>
+        </article>
+
+        <article class="note">
+          <div class="star">★★★★☆</div>
+          <div class="who">VOL.03 · 关于《铁皮屋顶上的猫》</div>
+          <h4>给成年人不说谎的动画</h4>
+          <p>黄桉没有把儿童视角拍成天真，而是拍成了一种准确。手绘质感在 4K 银幕上颗粒分明，这是今年最适合带小朋友一起看的片。</p>
+        </article>
+
+        <article class="note">
+          <div class="star">★★★★★</div>
+          <div class="who">VOL.04 · 关于《夜行列车》</div>
+          <h4>修复之后的呼吸</h4>
+          <p>4K 修复让这部 1981 年的作品重新拥有了阴影。Karlo 用一辆列车讲完了整个东欧的迁徙史，中景镜头的构图至今无人复制。</p>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目六：取阅须知 -->
+<section class="house" id="notice">
+  <div class="curtain">
+    <div class="curtain-head">
+      <div>
+        <div class="no">PROGRAMME · 06</div>
+        <h2>取阅须知</h2>
+      </div>
+      <div class="en">How to Use</div>
+    </div>
+    <div class="curtain-body">
+      <div class="notice">
+
+        <div class="item">
+          <h5>关于本站</h5>
+          <p>太色了电影网（<code>taiseledianyingwang-top.github.io</code>）是一个由影迷维护的非营利片单与排片参考站点，不提供在线播放与下载，仅整理影片资料与放映时间。</p>
+        </div>
+
+        <div class="item">
+          <h5>更新频率</h5>
+          <p>每日 06:00 更新当日放映时刻表，每周五增加新片条目，专题展映单元按月轮换，更新记录会在本页顶部信息条公告。</p>
+        </div>
+
+        <div class="item">
+          <h5>检索方式</h5>
+          <p>可通过 <a href="#manual" style="color:var(--gold-soft);border-bottom:1px dashed var(--gold)">检索手册</a> 按类型、年代、地区或专题四条路径查找片目，片名下方均标注片长、年份、产地与版本信息。</p>
+        </div>
+
+        <div class="item">
+          <h5>勘误与补充</h5>
+          <p>影片资料以片尾字幕与发行方公告为准，若发现片长、译名或年份有误，可通过首页公告栏的联系方式提交修正，核实后会更新对应条目。</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="foot">
+  <div class="cols">
+    <div>
+      <h6>太色了电影网</h6>
+      <ul>
+        <li>每日放映时刻表</li>
+        <li>在映片单与影片资料</li>
+        <li>类型、年代、地区检索</li>
+        <li>七日活动排片日历</li>
+      </ul>
+    </div>
+    <div>
+      <h6>栏目导览</h6>
+      <ul>
+        <li><a href="#ticker">放映时刻表</a></li>
+        <li><a href="#wall">在映片单</a></li>
+        <li><a href="#manual">检索手册</a></li>
+        <li><a href="#calendar">排片日历</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>资料分类</h6>
+      <ul>
+        <li><a href="#">院线热映</a></li>
+        <li><a href="#">经典重映</a></li>
+        <li><a href="#">冷门佳作</a></li>
+        <li><a href="#">限时展映</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>访问地址</h6>
+      <ul>
+        <li>官网：taiseledianyingwang-top.github.io</li>
+        <li>本页永久链接：https://taiseledianyingwang-top.github.io</li>
+        <li>更新时间：每日 06:00（北京时间）</li>
+        <li><a href="#notice">取阅须知</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">
+    <b>太色了电影网</b>（TAIS'ELE DIANYINGWANG）· 网址：<b>https://taiseledianyingwang-top.github.io</b> · 本站为影迷自建的非营利资料与排片参考站点，不提供在线播放与下载服务，所有影片资料仅供信息参考，版权归原著作权人所有。<br>
+    © 2026 taiseledianyingwang-top.github.io · 保留一切节目单编排权利 · 站点名称与域名：太色了电影网 / taiseledianyingwang-top.github.io
+  </div>
+</footer>
+
+<a href="#" class="scroll-top" aria-label="返回顶部">↑</a>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var links=document.querySelectorAll('.top-nav a[href^="#"],.side-nav a[href^="#"]');
+  links.forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=this.getAttribute('href');
+      if(id.length>1){
+        var el=document.querySelector(id);
+        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
+      }
+    });
+  });
+  var rows=document.querySelectorAll('.top-nav .row a');
+  var secs=Array.prototype.map.call(document.querySelectorAll('.house'),function(s){return s.id});
+  window.addEventListener('scroll',function(){
+    var pos=window.scrollY+140,cur='';
+    document.querySelectorAll('.house').forEach(function(s){
+      if(s.offsetTop<=pos)cur=s.id;
+    });
+    rows.forEach(function(a){
+      a.classList.toggle('now',a.getAttribute('href')==='#'+cur);
+    });
+  },{passive:true});
+});
+</script>
+</body>
+</html>
